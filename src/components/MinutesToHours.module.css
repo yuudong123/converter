@@ -1,0 +1,10 @@
+h1 {
+  background: orange;
+  color: white;
+  text-align: center;
+}
+
+form {
+  background: rgb(216, 216, 216);
+  padding: 10px;
+}
