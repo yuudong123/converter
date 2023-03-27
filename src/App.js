@@ -2,12 +2,16 @@ import React, { useState } from "react";
 
 function App() {
   const [minutes, setMinutes] = useState("");
+  const [hours, setHours] = useState("");
   const [disable, setDisable] = useState(true);
 
   const reverseInput = () => {
     setDisable((prev) => !prev);
   };
-
+  const resetInput = () => {
+    setMinutes("");
+    setHours("");
+  };
   return (
     <div className="App">
       <h1>단위 환산기</h1>
@@ -16,28 +20,47 @@ function App() {
         {disable ? (
           <>
             <div>
-              <input type="number" placeholder="minute" value={minutes} onChange={(e) => setMinutes(e.target.value)} disabled={!disable} />
+              <input
+                type="number"
+                placeholder="minute"
+                value={minutes}
+                onChange={(e) => {
+                  setMinutes(e.target.value);
+                  setHours(minutes / 60);
+                }}
+                disabled={!disable}
+              />
               <label htmlFor="">minutes</label>
             </div>
             <div>
-              <input type="number" placeholder="hour" value={minutes / 60} disabled={disable} />
+              <input type="number" placeholder="hour" value={hours} disabled={disable} />
               <label htmlFor="">hours</label>
             </div>
           </>
         ) : (
           <>
             <div>
-              <input type="number" placeholder="hour" value={minutes / 60} disabled={disable} />
+              <input
+                type="number"
+                placeholder="hour"
+                value={hours}
+                onChange={(e) => {
+                  setHours(e.target.value);
+                  setMinutes(hours * 60);
+                }}
+                disabled={!disable}
+              />
               <label htmlFor="">hours</label>
             </div>
             <div>
-              <input type="number" placeholder="minute" value={minutes} onChange={(e) => setMinutes(e.target.value)} disabled={!disable} />
+              <input type="number" placeholder="minute" value={minutes} disabled={disable} />
               <label htmlFor="">minutes</label>
             </div>
           </>
         )}
       </form>
       <button onClick={reverseInput}>반전</button>
+      <button onClick={resetInput}>초기화</button>
     </div>
   );
 }
